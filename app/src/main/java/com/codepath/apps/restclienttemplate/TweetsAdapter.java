@@ -40,6 +40,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -58,6 +59,16 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         return tweets.size();
     }
 
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Tweet> list) {
+        tweets.addAll(list);
+        notifyDataSetChanged();
+    }
+
     // Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -65,6 +76,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvBody;
         TextView tvScreen;
         TextView tvTimestamp;
+        ImageView ivImageUrl;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +84,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreen = itemView.findViewById(R.id.tvScreenName);
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
+            ivImageUrl = itemView.findViewById(R.id.ivImageUrl);
         }
 
         public void bind(Tweet tweet) {
@@ -79,6 +92,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreen.setText(tweet.user.screenName);
             tvTimestamp.setText(getRelativeTimeAgo(tweet.createdAt));
             Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+            if (tweet.mediaUrl != null) {
+                Glide.with(context).load(tweet.mediaUrl).into(ivImageUrl);
+            } else {
+                ivImageUrl.setVisibility(View.GONE);
+            }
         }
 
         private static final int SECOND_MILLIS = 1000;

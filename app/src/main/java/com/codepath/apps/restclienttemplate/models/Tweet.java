@@ -1,10 +1,13 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import android.media.Image;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ public class Tweet {
     public String body;
     public String createdAt;
     public User user;
+    public String mediaUrl;
 
     // empty constructor needed by the Parceler library
     public Tweet() {}
@@ -27,6 +31,11 @@ public class Tweet {
         }
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        if (jsonObject.getJSONObject("entities").has("media")) {
+            tweet.mediaUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");
+        } else {
+            tweet.mediaUrl = null;
+        }
 
         return tweet;
     }
