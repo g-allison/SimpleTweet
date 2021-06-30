@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -87,20 +88,11 @@ public class TimelineActivity extends AppCompatActivity {
             client.clearAccessToken(); // who's logged in
             finish(); // navigate
         } else if (item.getItemId() == R.id.compose) {
-            Toast.makeText(this, "Compose", Toast.LENGTH_SHORT).show();
+            // Navigate to the compose activity
+            Intent intent = new Intent(this, ComposeActivity.class);
+            startActivity(intent);
         }
         return true;
-
-        // Handle presses on the action bar items
-//        switch (item.getItemId()) {
-//            case R.id.button_logout:
-//                client.clearAccessToken(); // who's logged in
-//                finish(); // navigate
-//                return true;
-//            case R.id.compose:
-//                // compose icon
-//        }
-//        return true;
 
     }
 }
