@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -75,6 +76,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         return true;
     }
@@ -84,7 +86,21 @@ public class TimelineActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.button_logout) {
             client.clearAccessToken(); // who's logged in
             finish(); // navigate
+        } else if (item.getItemId() == R.id.compose) {
+            Toast.makeText(this, "Compose", Toast.LENGTH_SHORT).show();
         }
-        return false;
+        return true;
+
+        // Handle presses on the action bar items
+//        switch (item.getItemId()) {
+//            case R.id.button_logout:
+//                client.clearAccessToken(); // who's logged in
+//                finish(); // navigate
+//                return true;
+//            case R.id.compose:
+//                // compose icon
+//        }
+//        return true;
+
     }
 }
