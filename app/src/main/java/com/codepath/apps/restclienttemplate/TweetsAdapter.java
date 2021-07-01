@@ -108,7 +108,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             if (tweet.mediaUrl == null){
                 Log.i(TAG, "supposedly null tweet: " + tweet.mediaUrl);
                 ivImageUrl.setVisibility(View.GONE);
-            } else if (tweet.mediaUrl != null) {
+            } else {
+                ivImageUrl.setVisibility(View.VISIBLE);
                 Log.i(TAG, "supposedly not null tweet: " + tweet.mediaUrl);
                 Glide.with(context)
                         .load(tweet.mediaUrl)

@@ -5,7 +5,6 @@ import android.content.Context;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.oauth.OAuthBaseClient;
-import com.github.scribejava.apis.FlickrApi;
 import com.github.scribejava.apis.TwitterApi;
 import com.github.scribejava.core.builder.api.BaseApi;
 
@@ -48,9 +47,20 @@ public class TwitterClient extends OAuthBaseClient {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		// Can specify query string params directly or through RequestParams.
 		RequestParams params = new RequestParams();
+
+//		params.put("tweet_mode", "extended");
+		params.put("count", 25);
+		params.put("since_ID", 1);
+		client.get(apiUrl, params, handler);
+	}
+
+	public void getHomeTimelineExtended(long maxID, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
 		params.put("tweet_mode", "extended");
-//		params.put("count", 25);
-//		params.put("since_ID", 1);
+		params.put("count", 25);
+		params.put("max_id", maxID);
 		client.get(apiUrl, params, handler);
 	}
 

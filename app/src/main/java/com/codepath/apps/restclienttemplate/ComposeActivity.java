@@ -14,7 +14,6 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import okhttp3.Headers;

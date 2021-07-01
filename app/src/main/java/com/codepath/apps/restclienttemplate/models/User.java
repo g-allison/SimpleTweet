@@ -1,5 +1,8 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
