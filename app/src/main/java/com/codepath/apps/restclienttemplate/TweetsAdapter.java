@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import org.jetbrains.annotations.NotNull;
@@ -77,6 +78,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvScreen;
         TextView tvTimestamp;
         ImageView ivImageUrl;
+        TextView tvName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,17 +87,34 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreen = itemView.findViewById(R.id.tvScreenName);
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
             ivImageUrl = itemView.findViewById(R.id.ivImageUrl);
+            tvName = itemView.findViewById(R.id.tvName);
         }
 
         public void bind(Tweet tweet) {
+            int circleRadius = 100;
+            int roundedRadius = 30;
             tvBody.setText(tweet.body);
-            tvScreen.setText(tweet.user.screenName);
-            tvTimestamp.setText(getRelativeTimeAgo(tweet.createdAt));
-            Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
-            if (tweet.mediaUrl != null) {
-                Glide.with(context).load(tweet.mediaUrl).into(ivImageUrl);
-            } else {
+            tvScreen.setText("@" + tweet.user.screenName);
+            tvTimestamp.setText(" • " + getRelativeTimeAgo(tweet.createdAt));
+            tvName.setText(tweet.user.name);
+
+            Glide.with(context)
+                    .load(tweet.user.profileImageUrl)
+                    .centerCrop()
+                    .transform(new RoundedCorners(circleRadius))
+                    .into(ivProfileImage);
+            Log.i(TAG, "tweet images: " + tweet.mediaUrl);
+
+            if (tweet.mediaUrl == null){
+                Log.i(TAG, "supposedly null tweet: " + tweet.mediaUrl);
                 ivImageUrl.setVisibility(View.GONE);
+            } else if (tweet.mediaUrl != null) {
+                Log.i(TAG, "supposedly not null tweet: " + tweet.mediaUrl);
+                Glide.with(context)
+                        .load(tweet.mediaUrl)
+                        .centerCrop()
+                        .transform(new RoundedCorners(roundedRadius))
+                        .into(ivImageUrl);
             }
         }
 
@@ -119,15 +138,15 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 } else if (diff < 2 * MINUTE_MILLIS) {
                     return "a minute ago";
                 } else if (diff < 50 * MINUTE_MILLIS) {
-                    return diff / MINUTE_MILLIS + " m";
+                    return diff / MINUTE_MILLIS + "m";
                 } else if (diff < 90 * MINUTE_MILLIS) {
                     return "an hour ago";
                 } else if (diff < 24 * HOUR_MILLIS) {
-                    return diff / HOUR_MILLIS + " h";
+                    return diff / HOUR_MILLIS + "h";
                 } else if (diff < 48 * HOUR_MILLIS) {
                     return "yesterday";
                 } else {
-                    return diff / DAY_MILLIS + " d";
+                    return diff / DAY_MILLIS + "d";
                 }
             } catch (ParseException e) {
                 Log.i(TAG, "getRelativeTimeAgo failed");

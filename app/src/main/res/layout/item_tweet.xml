@@ -23,11 +23,12 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/tvName"
         tools:text="rpandey1234" />
 
     <TextView
         android:id="@+id/tvBody"
+        android:autoLink="all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvScreenName"
@@ -37,21 +38,35 @@
         tools:text="This is my tweet" />
 
     <TextView
-        android:id="@+id/tvTimestamp"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:textStyle="bold"
+        tools:text="Michelle Obama" />
+
+    <TextView
+        android:id="@+id/tvTimestamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        tools:text="9h" />
+        android:layout_toEndOf="@+id/tvScreenName"
+        android:text="TextView" />
 
     <ImageView
         android:id="@+id/ivImageUrl"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_width="277dp"
+        android:layout_height="190dp"
         android:layout_below="@+id/tvBody"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="0dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 

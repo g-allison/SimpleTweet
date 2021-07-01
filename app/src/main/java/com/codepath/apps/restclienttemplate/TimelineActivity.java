@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -62,8 +63,11 @@ public class TimelineActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
+        populateHomeTimeline();
+
         // Find the recycler view
         rvTweets = findViewById(R.id.rvTweets);
+        rvTweets.addItemDecoration(new DividerItemDecoration(rvTweets.getContext(), DividerItemDecoration.VERTICAL));
 
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
@@ -72,8 +76,6 @@ public class TimelineActivity extends AppCompatActivity {
         // Recycler view setup: layout manger and the adapter
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
-
-        populateHomeTimeline();
     }
 
     public void fetchTimelineAsync(int page) {
