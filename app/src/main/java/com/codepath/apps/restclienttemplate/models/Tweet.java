@@ -56,4 +56,20 @@ public class Tweet {
     public long getmID() {
         return ID;
     }
+
+    public String getBody() {
+        return body;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getMediaUrl() {
+        return mediaUrl;
+    }
 }

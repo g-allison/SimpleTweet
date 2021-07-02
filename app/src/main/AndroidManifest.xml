@@ -35,6 +35,7 @@
                     android:scheme="@string/intent_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".TweetActivity" />
     </application>
 
 </manifest>

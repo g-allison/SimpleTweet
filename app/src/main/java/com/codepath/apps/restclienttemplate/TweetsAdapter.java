@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,13 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     Context context;
     List<Tweet> tweets;
     public static final String TAG = "TweetsAdapter";
+    private OnTweetListener mOnTweetListener;
 
     // Pass in the context and list of tweets
-    public TweetsAdapter(Context context, List<Tweet> tweets) {
+    public TweetsAdapter(Context context, List<Tweet> tweets, OnTweetListener onTweetListener) {
         this.context = context;
         this.tweets = tweets;
+        this.mOnTweetListener = onTweetListener;
     }
 
     // For each row, inflate the layout
@@ -42,7 +45,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnTweetListener);
     }
 
     // Bind values based on the position of the element
@@ -71,7 +74,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     // Define a viewholder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivProfileImage;
         TextView tvBody;
@@ -80,7 +83,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivImageUrl;
         TextView tvName;
 
-        public ViewHolder(@NonNull View itemView) {
+        OnTweetListener onTweetListener;
+//        OnComposeListener onComposeListener;
+
+        public ViewHolder(@NonNull View itemView, OnTweetListener onTweetListener) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
@@ -88,6 +94,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
             ivImageUrl = itemView.findViewById(R.id.ivImageUrl);
             tvName = itemView.findViewById(R.id.tvName);
+
+            itemView.setOnClickListener(this);
+            this.onTweetListener = onTweetListener;
         }
 
         public void bind(Tweet tweet) {
@@ -106,11 +115,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             Log.i(TAG, "tweet images: " + tweet.mediaUrl);
 
             if (tweet.mediaUrl == null){
-                Log.i(TAG, "supposedly null tweet: " + tweet.mediaUrl);
                 ivImageUrl.setVisibility(View.GONE);
             } else {
                 ivImageUrl.setVisibility(View.VISIBLE);
-                Log.i(TAG, "supposedly not null tweet: " + tweet.mediaUrl);
                 Glide.with(context)
                         .load(tweet.mediaUrl)
                         .centerCrop()
@@ -156,6 +163,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             return "";
         }
+
+        @Override
+        public void onClick(View v) {
+            onTweetListener.onTweetClick(getAdapterPosition());
+        }
     }
 
+    public interface OnTweetListener{
+        void onTweetClick(int position);
+    }
+
+    public interface OnComposeListener{
+        void onComposeClick(int position);
+    }
 }

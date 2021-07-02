@@ -27,7 +27,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements TweetsAdapter.OnTweetListener, TweetsAdapter.OnComposeListener {
 
     public static final String TAG = "TimelineActivity";
     private static long MAX_ID;
@@ -71,7 +71,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
-        adapter = new TweetsAdapter(this, tweets);
+        adapter = new TweetsAdapter(this, tweets, this);
         populateHomeTimeline();
 
         // Recycler view setup: layout manger and the adapter
@@ -198,4 +198,20 @@ public class TimelineActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onTweetClick(int position) {
+        Log.d(TAG, "onTweetCLick: clicked");
+
+        Intent intent = new Intent(this, TweetActivity.class);
+//        intent.putExtra("tweet", Parcels.wrap(tweets.get(position).body));
+        intent.putExtra("tweet", Parcels.wrap(tweets.get(position)));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onComposeClick(int position) {
+        Intent intent = new Intent(this, ComposeActivity.class);
+        intent.putExtra("tweet", Parcels.wrap(tweets.get(position)));
+        startActivity(intent);
+    }
 }

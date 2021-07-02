@@ -8,8 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -25,18 +29,33 @@ public class ComposeActivity extends AppCompatActivity {
 
     EditText etCompose;
     Button btnTweet;
+    ImageView ivProfile;
 
+    Tweet tweet;
     TwitterClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_compose);
 
         client = TwitterApp.getRestClient(this);
 
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
+        ivProfile = findViewById(R.id.ivProfile);
+
+//        Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
+//        Log.d(TAG, "onCreate: tweet contents" + tweet);
+
+//        Glide.with(this)
+//                .load(tweet.user.profileImageUrl)
+//                .centerCrop()
+//                .transform(new RoundedCorners(circleRadius))
+//                .into(ivProfile);
+
 
         // Set click listener on button
         btnTweet.setOnClickListener(new View.OnClickListener() {

@@ -8,28 +8,27 @@
     android:orientation="vertical"
     app:counterEnabled="true"
     app:counterMaxLength="140"
-    tools:context=".ComposeActivity"
-    >
+    tools:context=".ComposeActivity">
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilCompose"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="410dp"
+        android:layout_height="244dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="9dp"
-        app:hintEnabled="false"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="76dp"
         app:counterEnabled="true"
         app:counterMaxLength="140"
+        app:counterOverflowTextAppearance="@style/counterOverride"
         app:counterTextAppearance="@style/counterText"
-        app:counterOverflowTextAppearance="@style/counterOverride">
+        app:hintEnabled="false">
 
         <EditText
             android:id="@+id/etCompose"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="210dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
@@ -39,6 +38,7 @@
             android:hint="What's happening?"
             android:inputType="textMultiLine"
             android:minLines="20" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -47,9 +47,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tilCompose"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="29dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="33dp"
         android:text="@string/tweet" />
+
+    <ImageView
+        android:id="@+id/ivProfile"
+        android:layout_width="48dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="350dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="540dp"
+        android:layout_weight="1"
+        tools:srcCompat="@tools:sample/avatars" />
 
 
 </RelativeLayout>
