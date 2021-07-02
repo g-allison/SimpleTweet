@@ -39,6 +39,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
+    MenuItem miActionProgressItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
 
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
-        adapter = new TweetsAdapter(this, tweets, this);
+        adapter = new TweetsAdapter(this, tweets, this, this);
         populateHomeTimeline();
 
         // Recycler view setup: layout manger and the adapter
@@ -89,11 +90,32 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
         rvTweets.addOnScrollListener(scrollListener);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
+    }
+
     private void loadNextDataFromApi(final int page) {
+        showProgressBar();
         Log.i(TAG, "entered loadNextDataFromApi");
         client.getHomeTimelineExtended(MAX_ID, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
+                hideProgressBar();
                 Log.i(TAG, "Completed endless scroll");
                 JSONArray jsonArray = json.jsonArray;
                 try {
@@ -117,9 +139,11 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
         // Send the network request to fetch the updated data
         // `client` here is an instance of Android Async HTTP
         // getHomeTimeline is an example endpoint.
+        showProgressBar();
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
+                hideProgressBar();
                 // Remember to CLEAR OUT old items before appending in the new ones
                 adapter.clear();
                 // ...the data has come back, add new items to your adapter...
@@ -138,6 +162,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        showProgressBar();
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             // Get data from intent
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
@@ -149,6 +174,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
         }
+        hideProgressBar();
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -210,8 +236,11 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
 
     @Override
     public void onComposeClick(int position) {
+        Log.d(TAG, "entered onComposeClick");
         Intent intent = new Intent(this, ComposeActivity.class);
-        intent.putExtra("tweet", Parcels.wrap(tweets.get(position)));
+        intent.putExtra("compose_tweet", Parcels.wrap(tweets.get(position)));
+        Log.d(TAG, "onComposeClick: ");
+        Log.d(TAG, "onComposeClick: intent = " + intent);
         startActivity(intent);
     }
 }

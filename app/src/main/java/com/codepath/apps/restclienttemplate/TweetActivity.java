@@ -44,7 +44,7 @@ public class TweetActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient(this);
 
         Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
-        Log.d(TAG, "onCreate: tweet contents" + tweet.body);
+        Log.d(TAG, "onCreate: tweet contents" + tweet);
 
         tvBody = findViewById(R.id.tvBody);
         tvScreen = findViewById(R.id.tvScreenName);

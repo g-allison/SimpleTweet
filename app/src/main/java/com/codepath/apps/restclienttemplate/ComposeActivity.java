@@ -20,6 +20,8 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import org.json.JSONException;
 import org.parceler.Parcels;
 
+import javax.annotation.Nullable;
+
 import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
@@ -29,32 +31,30 @@ public class ComposeActivity extends AppCompatActivity {
 
     EditText etCompose;
     Button btnTweet;
-    ImageView ivProfile;
+    ImageView ivProfileImage;
 
-    Tweet tweet;
     TwitterClient client;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_compose);
-
         client = TwitterApp.getRestClient(this);
 
-        etCompose = findViewById(R.id.etCompose);
-        btnTweet = findViewById(R.id.btnTweet);
-//        ivProfile = findViewById(R.id.ivProfile);
+//        etCompose = findViewById(R.id.etCompose);
+//        btnTweet = findViewById(R.id.btnTweet);
 
-//        Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
-//        Log.d(TAG, "onCreate: tweet contents" + tweet);
+        Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra("compose_tweet"));
+//        Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
+        Log.d(TAG, "onCreate: tweet contents " + tweet.body);
 
+//        ivProfileImage = findViewById(R.id.ivProfileImage);
 //        Glide.with(this)
 //                .load(tweet.user.profileImageUrl)
 //                .centerCrop()
-//                .transform(new RoundedCorners(circleRadius))
-//                .into(ivProfile);
+//                .transform(new RoundedCorners(100))
+//                .into(ivProfileImage);
 
 
         // Set click listener on button
