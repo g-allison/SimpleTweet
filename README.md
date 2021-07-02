@@ -1,8 +1,8 @@
 # Project 3 - *Simple Twitter*
 
-**Name of your app** is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
+**Simple Twitter** is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **X** hours spent in total
+Time spent: **30** hours spent in total
 
 ## User Stories
 
@@ -24,17 +24,17 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 * [X] User is using **"Twitter branded" colors and styles**
-* [ ] User sees an **indeterminate progress indicator** when any background or network task is happening
+* [X] User sees an **indeterminate progress indicator** when any background or network task is happening
 * [ ] User can **select "reply" from home timeline to respond to a tweet**
   * [ ] User that wrote the original tweet is **automatically "@" replied in compose**
-* [ ] User can tap a tweet to **open a detailed tweet view**
+* [X] User can tap a tweet to **open a detailed tweet view**
   * [ ] User can **take favorite (and unfavorite) or retweet** actions on a tweet
 * [X] User can view more tweets as they scroll with infinite pagination
 * [X] Compose tweet functionality is built using modal overlay
 * [X] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
 * [X] Replace all icon drawables and other static image assets with [vector drawables](http://guides.codepath.org/android/Drawables#vector-drawables) where appropriate.
 * [ ] User can view following / followers list through any profile they view.
-* [ ] Use the View Binding library to reduce view boilerplate.
+* [X] Use the View Binding library to reduce view boilerplate.
 * [X] On the Twitter timeline, apply scrolling effects such as [hiding/showing the toolbar](http://guides.codepath.org/android/Using-the-App-ToolBar#reacting-to-scroll) by implementing [CoordinatorLayout](http://guides.codepath.org/android/Handling-Scrolls-with-CoordinatorLayout#responding-to-scroll-events).
 * [X] User can **open the twitter app offline and see last loaded tweets**. Persisted in SQLite tweets are refreshed on every application launch. While "live data" is displayed when app can get it from Twitter API, it is also saved for use in offline mode.
 
@@ -43,14 +43,15 @@ The following **additional** features are implemented:
 * [X] Made profile pictures circuler to make Twitter UI
 * [X] Added user's name and @
 * [X] Made username bold to match Twitter UI
+* [X] Removed link for image from the body of the tweet so it has cleaner look
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with [Kap](https://getkap.co/).
+GIF created with [LICEcap](https://www.cockos.com/licecap/).
 
 ## Notes
 
