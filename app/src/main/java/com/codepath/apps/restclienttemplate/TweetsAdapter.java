@@ -83,6 +83,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivImageUrl;
         TextView tvName;
 
+        final int CIRCLE_RADIUS = 100;
+        final int ROUNDED_RADIUS = 30;
+
         OnTweetListener onTweetListener;
 //        OnComposeListener onComposeListener;
 
@@ -100,30 +103,44 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         }
 
         public void bind(Tweet tweet) {
-            int circleRadius = 100;
-            int roundedRadius = 30;
             tvBody.setText(tweet.body);
             tvScreen.setText("@" + tweet.user.screenName);
-            tvTimestamp.setText(" • " + getRelativeTimeAgo(tweet.createdAt));
+            tvTimestamp.setText(" • " + (getRelativeTimeAgo(tweet.createdAt))); // getRelativeTimeAgo
             tvName.setText(tweet.user.name);
 
             Glide.with(context)
                     .load(tweet.user.profileImageUrl)
                     .centerCrop()
-                    .transform(new RoundedCorners(circleRadius))
+                    .transform(new RoundedCorners(CIRCLE_RADIUS))
                     .into(ivProfileImage);
             Log.i(TAG, "tweet images: " + tweet.mediaUrl);
 
             if (tweet.mediaUrl == null){
                 ivImageUrl.setVisibility(View.GONE);
             } else {
+                tvBody.setText(parsedTwitterBody(tweet.body));
                 ivImageUrl.setVisibility(View.VISIBLE);
                 Glide.with(context)
                         .load(tweet.mediaUrl)
                         .centerCrop()
-                        .transform(new RoundedCorners(roundedRadius))
+                        .transform(new RoundedCorners(ROUNDED_RADIUS))
                         .into(ivImageUrl);
             }
+        }
+
+        // removes link to image from body of text
+        private String parsedTwitterBody(String body) {
+            int index = body.lastIndexOf("https");
+            Log.i(TAG, "index: " + index);
+            Log.i(TAG, "parsedTwitterBody: " + body);
+            String substring = body.substring(0, index);
+            Log.i(TAG, "parsedTwitterBody: " + substring);
+            return substring;
+        }
+
+        @Override
+        public void onClick(View v) {
+            onTweetListener.onTweetClick(getAdapterPosition());
         }
 
         private static final int SECOND_MILLIS = 1000;
@@ -162,11 +179,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             }
 
             return "";
-        }
-
-        @Override
-        public void onClick(View v) {
-            onTweetListener.onTweetClick(getAdapterPosition());
         }
     }
 

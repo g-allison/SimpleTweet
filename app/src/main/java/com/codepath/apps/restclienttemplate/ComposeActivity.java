@@ -45,7 +45,7 @@ public class ComposeActivity extends AppCompatActivity {
 
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
-        ivProfile = findViewById(R.id.ivProfile);
+//        ivProfile = findViewById(R.id.ivProfile);
 
 //        Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra("tweet"));
 //        Log.d(TAG, "onCreate: tweet contents" + tweet);

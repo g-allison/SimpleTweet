@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.media.Image;
+import android.util.Log;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -10,12 +11,16 @@ import org.json.JSONObject;
 import org.parceler.Parcel;
 
 import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Parcel
 public class Tweet {
 
+    private static final String TAG = "Tweet";
     public String body;
     public String createdAt;
     public User user;
