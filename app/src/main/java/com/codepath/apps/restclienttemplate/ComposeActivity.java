@@ -1,8 +1,11 @@
 package com.codepath.apps.restclienttemplate;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,13 +15,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.bumptech.glide.Glide;
+
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.codepath.apps.restclienttemplate.databinding.ActivityComposeBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.parceler.Parcels;
+
+import java.security.MessageDigest;
 
 import javax.annotation.Nullable;
 
@@ -32,6 +43,8 @@ public class ComposeActivity extends AppCompatActivity {
     EditText etCompose;
     Button btnTweet;
     ImageView ivProfileImage;
+    TextView tvName;
+    TextView tvAccount;
 
     TwitterClient client;
 
@@ -39,23 +52,26 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_compose);
+        ActivityComposeBinding binding = ActivityComposeBinding.inflate(getLayoutInflater());
+
+        View view = binding.getRoot();
+        setContentView(view);
+
         client = TwitterApp.getRestClient(this);
 
-//        etCompose = findViewById(R.id.etCompose);
-//        btnTweet = findViewById(R.id.btnTweet);
+        etCompose = binding.etCompose;
+        btnTweet = binding.btnTweet;
+        ivProfileImage = binding.ivProfileImage;
+        tvName = binding.textView;
+        tvAccount = binding.textView2;
 
-        Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra("compose_tweet"));
-//        Tweet tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
-        Log.d(TAG, "onCreate: tweet contents " + tweet.body);
 
-//        ivProfileImage = findViewById(R.id.ivProfileImage);
-//        Glide.with(this)
-//                .load(tweet.user.profileImageUrl)
+
+//        Glide.with(context)
+//                .load(R.mipmap.profile_pic_foreground)
 //                .centerCrop()
-//                .transform(new RoundedCorners(100))
+//                .transform(new RoundedCorners(30))
 //                .into(ivProfileImage);
-
 
         // Set click listener on button
         btnTweet.setOnClickListener(new View.OnClickListener() {

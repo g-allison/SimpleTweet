@@ -29,14 +29,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     List<Tweet> tweets;
     public static final String TAG = "TweetsAdapter";
     private OnTweetListener mOnTweetListener;
-    private OnComposeListener mOnComposeListener;
 
     // Pass in the context and list of tweets
-    public TweetsAdapter(Context context, List<Tweet> tweets, OnTweetListener onTweetListener, OnComposeListener onComposeListener) {
+    public TweetsAdapter(Context context, List<Tweet> tweets, OnTweetListener onTweetListener) {
         this.context = context;
         this.tweets = tweets;
         this.mOnTweetListener = onTweetListener;
-        this.mOnComposeListener = onComposeListener;
     }
 
     // For each row, inflate the layout
@@ -45,7 +43,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
 
-        return new ViewHolder(view, mOnTweetListener, mOnComposeListener);
+        return new ViewHolder(view, mOnTweetListener);
     }
 
     // Bind values based on the position of the element
@@ -73,7 +71,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    // Define a viewholder
+    // Defines a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivProfileImage;
@@ -87,9 +85,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         final int ROUNDED_RADIUS = 30;
 
         OnTweetListener onTweetListener;
-        OnComposeListener onComposeListener;
 
-        public ViewHolder(@NonNull View itemView, OnTweetListener onTweetListener, OnComposeListener onComposeListener) {
+        public ViewHolder(@NonNull View itemView, OnTweetListener onTweetListener) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
@@ -100,7 +97,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
             itemView.setOnClickListener(this);
             this.onTweetListener = onTweetListener;
-            this.onComposeListener = onComposeListener;
         }
 
         public void bind(Tweet tweet) {
@@ -142,7 +138,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         @Override
         public void onClick(View v) {
             onTweetListener.onTweetClick(getAdapterPosition());
-            onComposeListener.onComposeClick(getAdapterPosition());
         }
 
         private static final int SECOND_MILLIS = 1000;
@@ -188,7 +183,4 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         void onTweetClick(int position);
     }
 
-    public interface OnComposeListener{
-        void onComposeClick(int position);
-    }
 }

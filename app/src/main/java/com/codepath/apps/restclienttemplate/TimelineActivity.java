@@ -13,10 +13,13 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.databinding.ActivityTimelineBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +30,8 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity implements TweetsAdapter.OnTweetListener, TweetsAdapter.OnComposeListener {
+public class TimelineActivity extends AppCompatActivity implements TweetsAdapter.OnTweetListener {
+
 
     public static final String TAG = "TimelineActivity";
     private static long MAX_ID;
@@ -45,9 +49,12 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline);
+        ActivityTimelineBinding binding = ActivityTimelineBinding.inflate(getLayoutInflater());
 
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        View view = binding.getRoot();
+        setContentView(view);
+
+        swipeContainer = binding.swipeContainer;
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -67,12 +74,12 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
         client = TwitterApp.getRestClient(this);
 
         // Find the recycler view
-        rvTweets = findViewById(R.id.rvTweets);
+        rvTweets = binding.rvTweets;
         rvTweets.addItemDecoration(new DividerItemDecoration(rvTweets.getContext(), DividerItemDecoration.VERTICAL));
 
         // Initialize the list of tweets and adapter
         tweets = new ArrayList<>();
-        adapter = new TweetsAdapter(this, tweets, this, this);
+        adapter = new TweetsAdapter(this, tweets, this);
         populateHomeTimeline();
 
         // Recycler view setup: layout manger and the adapter
@@ -84,7 +91,6 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 loadNextDataFromApi(page);
-
             }
         };
         rvTweets.addOnScrollListener(scrollListener);
@@ -226,21 +232,10 @@ public class TimelineActivity extends AppCompatActivity implements TweetsAdapter
 
     @Override
     public void onTweetClick(int position) {
-        Log.d(TAG, "onTweetCLick: clicked");
-
+        Log.d(TAG, "onTweetClick: clicked");
         Intent intent = new Intent(this, TweetActivity.class);
-//        intent.putExtra("tweet", Parcels.wrap(tweets.get(position).body));
         intent.putExtra("tweet", Parcels.wrap(tweets.get(position)));
         startActivity(intent);
-    }
-
-    @Override
-    public void onComposeClick(int position) {
-        Log.d(TAG, "entered onComposeClick");
-        Intent intent = new Intent(this, ComposeActivity.class);
-        intent.putExtra("compose_tweet", Parcels.wrap(tweets.get(position)));
-        Log.d(TAG, "onComposeClick: ");
-        Log.d(TAG, "onComposeClick: intent = " + intent);
-        startActivity(intent);
+        Log.d(TAG, "startActivity");
     }
 }
